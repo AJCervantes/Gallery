@@ -1,0 +1,93 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Javascript</title>
+<style type="text/css">
+	body{
+		background-color: #979CA0;
+		text-align: center;
+  		font-family: Arial, Helvetica, sans-serif;
+	}
+	h1{
+		color : #BFFF00;
+		font-size: 40px;
+	}
+	div.info{
+		text-align: center;
+		font-size: 30px;
+		color: #000000;
+		white-space: pre-line;
+	}
+	img.m{
+		border: 3px solid #000000;
+	}
+	img.thumb{
+		height: 100px;
+		width: 100px;
+		border: 3px solid #000000;
+	}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+	<h1>Art Gallery</h1>
+	<div class="info" id="info"></div>
+	<img id="mainI" height="450" width="486" class="m" src="images/nyc.jpg" />
+	<br />
+	<div id="divCont" name="divCont"></div>
+	<h5>I take no credit for any of these pieces of art</h5>
+
+	<script language="javascript">
+
+
+	function obj(name, price, imgsmall, imglarge){
+		this.name = name;
+		this.price = price;
+		this.imgS = imgsmall;
+		this.imgL = imglarge;
+	}
+		var arr = [];
+
+		//populate obj parameters
+		arr.push(new obj("New York City", "$5,800", "images/nyc.jpg", "images/nyc.jpg"));
+		arr.push(new obj("Full Moon", "$390", "images/wierd.jpg", "images/wierd.jpg"));
+		arr.push(new obj("Treescape 2", "$624", "images/tree.jpg", "images/tree.jpg"));
+		arr.push(new obj("Feather", "$35", "images/feather.jpg", "images/feather.jpg"));
+		arr.push(new obj("Paintworks Quality Artwork Priint_ Canoe", "$70", "images/sun.jpg", "images/sun.jpg"));
+
+		for (var i = 0; i < arr.length; i++) {
+			document.getElementById("divCont").innerHTML += "<img id='" + i + "' src='"+ arr[i].imgS + "' class='thumb'>";
+		}
+
+
+	$(document).ready(function(){
+		$('#divCont img').on({
+			mouseover : function() {
+				$(this).css({
+					'cursor': 'pointer',
+				});
+				var imageUrl = $(this).attr('src');
+				$('#mainI').fadeOut(300, function(){
+					$(this).attr('src', imageUrl);
+				}).fadeIn(300);
+			},
+			mouseout : function(){
+				$(this).css({
+					'cursor' : 'default',
+				});
+			},
+			click : function(){
+				var index = $("#divCont img").index(this);
+        		$("#info").html("Title: " + arr[index].name + "<br />Price: " + arr[index].price)
+                    .show()
+                    .delay(5000)
+                    .fadeOut();
+			},
+
+		});
+	});
+</script>
+</body>
+</html>
